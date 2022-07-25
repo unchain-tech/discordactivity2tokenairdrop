@@ -1,0 +1,22 @@
+#input data
+/discord_log
+
+#caches
+.DS_Store
+/__pycache__
+
+#environment
+.env
+/venv
+
+#playground
+csv_CHAIcounter.ipynb
+DiscordChatExporter.CLI.zip
+
+#ChatExporter
+/DiscordChatExporter
+
+#sensitive 
+CHAI_csv_execute.sh
+CHAIcounter.py 
+crawl_discordServer.sh
