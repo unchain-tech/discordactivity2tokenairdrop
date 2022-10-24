@@ -16,7 +16,7 @@ DiscordChatExporter.CLI.zip
 #ChatExporter
 /DiscordChatExporter
 
-#sensitive 
+#sensitive
 CHAI_csv_execute.sh
-CHAIcounter.py 
+chai_counter.py
 crawl_discordServer.sh

@@ -1,0 +1,16 @@
+{
+    "python.defaultInterpreterPath": "venv/bin/python3",
+    "python.analysis.typeCheckingMode": "basic",
+    "python.formatting.provider": "autopep8",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.python"
+    },
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.lintOnSave":true,
+    "python.linting.ignorePatterns":[
+      "**/site-packages/**/*.py",
+      ".vscode/*.py"
+    ]
+}
