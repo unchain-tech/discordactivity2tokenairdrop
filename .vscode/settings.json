@@ -1,6 +1,9 @@
 {
     "python.defaultInterpreterPath": "venv/bin/python3",
     "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
     "python.formatting.provider": "autopep8",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[python]": {
