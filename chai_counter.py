@@ -285,9 +285,9 @@ def main(folder: str, time_start: str, time_end: str):
 
 
 load_dotenv(os.path.join(os.getcwd(), '.env'))
-#main(str(os.getenv("folderName")), str(os.getenv("Af")), str(os.getenv("Bf")))
-if os.getenv("folderName") == "2022-11-30":
-    main(str(os.getenv("folderName")), str(os.getenv("Af")), "2022-11-24")
+if pd.to_datetime(str(os.getenv("folderName"))) >= pd.to_datetime('today'):
+    main(str(os.getenv("folderName")), str(
+        os.getenv("Af")), str(pd.to_datetime('today')))
 else:
     main(str(os.getenv("folderName")), str(
         os.getenv("Af")), str(os.getenv("Bf")))
