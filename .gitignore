@@ -1,5 +1,5 @@
 #input data
-/discord_log
+/discord_log*
 
 #caches
 .DS_Store
@@ -18,5 +18,4 @@ DiscordChatExporter.CLI.zip
 
 #sensitive
 CHAI_csv_execute.sh
-chai_counter.py
 crawl_discordServer.sh
