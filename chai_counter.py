@@ -25,7 +25,7 @@ class Record(TypedDict):
 
 
 def ens(endpoint) -> ENS:
-    """This function retrieves ENS endpiont."""
+    """ This function retrieves ENS endpiont. """
 
     w3_provider: Web3.HTTPProvider = Web3.HTTPProvider(endpoint)
     assert w3_provider.isConnected()
@@ -35,7 +35,7 @@ def ens(endpoint) -> ENS:
 
 
 def get_wallet_addresses(airtable_settings: AirtableSettings) -> dict[str, str]:
-
+    """ This function maps discord ID to wallet addresses. """
     # retrieve relevant info from CHAI form
     table_chai: list[Record] = Table(
         airtable_settings["apikey"], airtable_settings["chaiform"], 'Table 1'
@@ -53,7 +53,7 @@ def get_wallet_addresses(airtable_settings: AirtableSettings) -> dict[str, str]:
 
 
 def get_p2p_data(path) -> pd.DataFrame:
-    """This function creates a dataframe  discord data df"""
+    """ This function creates a dataframe  discord data df. """
 
     # retrieve raw discord log
     csv_posts: list[str] = sorted(os.listdir(path))
@@ -80,7 +80,7 @@ def get_p2p_data(path) -> pd.DataFrame:
 
 
 def count_chai_p2p(df_chatlog, chai_per_p2p, airtable_settings, ens_endpoint) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """ This function counts p2p posts by author."""
+    """ This function counts p2p posts by author. """
 
     # initialize {discord_id: p2p_amount}
     chai_p2p: dict[str, int] = dict.fromkeys(
@@ -186,8 +186,12 @@ def count_chai_projects(chai_per_project, airtable_settings, time_start, time_en
                 )
 
                 # write verbose output including discord Id
-                verbose_dict[record['fields']['Discord Handle']
-                             ] += chai_per_project  # type: ignore
+                if record['fields']['Discord Handle'] in verbose_dict.keys():
+                    verbose_dict[record['fields']['Discord Handle']
+                                 ] += chai_per_project  # type: ignore
+                else:
+                    verbose_dict[record['fields']['Discord Handle']
+                                 ] = chai_per_project  # type: ignore
 
                 # update CHAI_done field
                 table_projform.update(record['id'], {'CHAI_done': 'yes'})
