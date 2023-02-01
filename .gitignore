@@ -17,6 +17,6 @@ DiscordChatExporter.CLI.zip
 /DiscordChatExporter
 
 #sensitive
-CHAI_csv_execute.sh
 crawl_discordServer.sh
 output_csv
+config.txt

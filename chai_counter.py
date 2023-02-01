@@ -98,6 +98,8 @@ def count_chai_p2p(df_chatlog, chai_per_p2p, airtable_settings, ens_endpoint) ->
     chai_distribution_p2p: list[list] = []
     verbose_list: list[list] = []
     for recipient, chai_amount in chai_p2p.items():
+        #print(f"recipient: {recipient}, wallet:{wallet_addresses[recipient]}")
+
         # resolve ENS to address if necessary
         try:
             if wallet_addresses[recipient][:2] == "0x":
@@ -108,8 +110,7 @@ def count_chai_p2p(df_chatlog, chai_per_p2p, airtable_settings, ens_endpoint) ->
                         ens_endpoint.address(wallet_addresses[recipient]))
                 except:
                     print(
-                        f"ENS name {wallet_addresses[recipient]} doesn't resolve to an address."
-                    )
+                        f"ENS name {wallet_addresses[recipient]} doesn't resolve to an address.")
             else:
                 print(
                     f"{wallet_addresses[recipient]} is an invalid wallet address.")
@@ -146,23 +147,17 @@ def count_chai_projects(chai_per_project, airtable_settings, time_start, time_en
     projcomp_list: list[Record] = table_projform.all(
         fields=['Discord Handle', 'Wallet address', 'CHAI_done', 'Created'])  # type: ignore
 
-    wallet_addresses: dict[str, str] = get_wallet_addresses(airtable_settings)
-
     # create list of wallet addresses and CHAI amount for each project completion
     chai_distribution_proj: list[list] = []
     verbose_dict: dict[str, int] = {}
     for record in projcomp_list:
-
         try:
-
             completed_date: pd.Timestamp = pd.to_datetime(
                 record['fields']['Created']).tz_localize(None)  # type: ignore
 
             if record['fields']['CHAI_done'] != "no":
                 pass
-            elif not (
-                    pd.to_datetime(time_start) <= completed_date
-                    and completed_date <= pd.to_datetime(time_end)):
+            elif not (pd.to_datetime(time_start) <= completed_date and completed_date <= pd.to_datetime(time_end)):
                 pass
             else:
                 # resolve ENS to address if necessary
