@@ -20,7 +20,7 @@ mkdir -p discord_log/$folderName
 export userID Af Bf folderName
 
 #execute discord crawling script
-#bash ./crawl_discordServer.sh
+bash ./crawl_discordServer.sh
 
 #activate python venv
 source ./venv/bin/activate
