@@ -2,7 +2,7 @@
 
 This script consists of two parts:
 
-1. Discord cralwer
+1. Discord crawler
 2. CHAI distribution CSV generator
 
 The first part (`crawl_discordServer.sh`) crawls the UNCHAIN discord server and collects a dataset of chatlogs from specified channels within the specified timeframe.
