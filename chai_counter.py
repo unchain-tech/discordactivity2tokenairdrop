@@ -45,8 +45,7 @@ def get_wallet_addresses(airtable_settings: AirtableSettings) -> dict[str, str]:
     wallet_addresses: dict[str, str] = {}
     for record in table_chai:
         wallet_addresses.update(
-            {record['fields']["Discord Handle"]: record['fields']
-                ["Wallet Address"]}  # type: ignore
+            {record['fields']["Discord Handle"]: record['fields']["Wallet Address"]} # type: ignore
         )
 
     return wallet_addresses
@@ -79,7 +78,9 @@ def get_p2p_data(path) -> pd.DataFrame:
     return df_has_p2p_bydate
 
 
-def count_chai_p2p(df_chatlog, chai_per_p2p, airtable_settings, ens_endpoint) -> tuple[pd.DataFrame, pd.DataFrame]:
+def count_chai_p2p(
+        df_chatlog, chai_per_p2p, airtable_settings, ens_endpoint
+    ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """ This function counts p2p posts by author. """
 
     # initialize {discord_id: p2p_amount}
@@ -108,7 +109,7 @@ def count_chai_p2p(df_chatlog, chai_per_p2p, airtable_settings, ens_endpoint) ->
                 try:
                     wallet_addresses[recipient] = str(
                         ens_endpoint.address(wallet_addresses[recipient]))
-                except:
+                except LookupError:
                     print(
                         f"ENS name {wallet_addresses[recipient]} doesn't resolve to an address.")
             else:
@@ -122,7 +123,7 @@ def count_chai_p2p(df_chatlog, chai_per_p2p, airtable_settings, ens_endpoint) ->
             verbose_list.append(
                 [recipient, chai_amount])
 
-        except:
+        except LookupError:
             print(f"could not find {recipient}'s wallet address.")
 
     csv_p2p: pd.DataFrame = pd.DataFrame(
@@ -137,7 +138,9 @@ def count_chai_p2p(df_chatlog, chai_per_p2p, airtable_settings, ens_endpoint) ->
     return csv_p2p, verbose_output
 
 
-def count_chai_projects(chai_per_project, airtable_settings, time_start, time_end, ens_endpoint) -> tuple[pd.DataFrame, pd.DataFrame]:
+def count_chai_projects(
+        chai_per_project, airtable_settings, time_start, time_end, ens_endpoint
+    ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """ This function counts project completions by each user."""
 
     # retrieve relevant info from Project Completion form
@@ -157,7 +160,11 @@ def count_chai_projects(chai_per_project, airtable_settings, time_start, time_en
 
             if record['fields']['CHAI_done'] != "no":
                 pass
-            elif not (pd.to_datetime(time_start) <= completed_date and completed_date <= pd.to_datetime(time_end)):
+            elif not (
+                pd.to_datetime(time_start) <= completed_date
+                and
+                completed_date <= pd.to_datetime(time_end)
+            ):
                 pass
             else:
                 # resolve ENS to address if necessary
@@ -167,9 +174,10 @@ def count_chai_projects(chai_per_project, airtable_settings, time_start, time_en
                     try:
                         record['fields']['Wallet address'] = str(
                             ens_endpoint.address(record['fields']['Wallet address']))
-                    except:
+                    except LookupError:
                         print(
-                            f"ENS name {record['fields']['Wallet address']} doesn't resolve to an address."
+                            f"ENS name {record['fields']['Wallet address']} \
+                            doesn't resolve to an address."
                         )
                 else:
                     print(
@@ -181,7 +189,7 @@ def count_chai_projects(chai_per_project, airtable_settings, time_start, time_en
                 )
 
                 # write verbose output including discord Id
-                if record['fields']['Discord Handle'] in verbose_dict.keys():
+                if record['fields']['Discord Handle'] in verbose_dict:
                     verbose_dict[record['fields']['Discord Handle']
                                  ] += chai_per_project  # type: ignore
                 else:
@@ -190,7 +198,7 @@ def count_chai_projects(chai_per_project, airtable_settings, time_start, time_en
 
                 # update CHAI_done field
                 table_projform.update(record['id'], {'CHAI_done': 'yes'})
-        except:
+        except RuntimeError:
             pass
 
     csv_proj: pd.DataFrame = pd.DataFrame(
@@ -213,7 +221,7 @@ def write_csv_for_airdrop(df_output: pd.DataFrame,  filename: str) -> bool:
             f"./output_csv/{filename}.csv", header=True, index=False)
         print(f"csv for {filename} done.")
         return True
-    except:
+    except LookupError:
         print(f"no CHAI for {filename}.")
         return False
 
@@ -221,8 +229,9 @@ def write_csv_for_airdrop(df_output: pd.DataFrame,  filename: str) -> bool:
 def write_csv_for_logging(df_output: pd.DataFrame,  folder: str, category: str) -> bool:
     """ write to csv formatted for human reading tying discord ID to CHAI received """
     months: dict[str, str] = {
-        "01": "January", "02": "February", "03": "March", "04": "April", "05": "May", "06": "June",
-        "07": "July", "08": "August", "09": "September", "10": "October", "11": "November", "12": "December"
+        "01": "January", "02": "February", "03": "March", "04": "April",
+        "05": "May", "06": "June", "07": "July", "08": "August",
+        "09": "September", "10": "October", "11": "November", "12": "December"
     }
 
     try:
@@ -230,7 +239,7 @@ def write_csv_for_logging(df_output: pd.DataFrame,  folder: str, category: str) 
         df_output[["receiver", "amount"]].to_csv(
             f"./verbose_record/LOG--{months[folder[5:7]]}_{category}.csv", header=True, index=False)
         return True
-    except:
+    except RuntimeError:
         return False
 
 
