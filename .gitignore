@@ -13,9 +13,6 @@
 csv_CHAIcounter.ipynb
 DiscordChatExporter.CLI.zip
 
-#ChatExporter
-/DiscordChatExporter
-
 #sensitive
 crawl_discordServer.sh
 output_csv
