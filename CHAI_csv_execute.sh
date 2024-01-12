@@ -21,7 +21,7 @@ mkdir -p discord_log/$folderName
 export userID serverID Af Bf folderName
 
 #execute discord crawling script
-bash ./crawl_discordServer.sh
+dotnet ./DiscordChatExporter.Cli/DiscordChatExporter.Cli.dll exportguild -t $userID -g $serverID --include-threads active --after "$Af" --before "$Bf" -o discord_log/$folderName
 
 #activate python venv
 source ./venv/bin/activate
