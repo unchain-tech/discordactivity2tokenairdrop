@@ -14,3 +14,7 @@ The second part (`CHAIcounter.py`) looks into the collected dataset and counts t
 ## Must fix
 
 - [CHAI form](https://airtable.com/shrlc6B8wfHBiZmYV) のアクセスを現在持っていないので配布に必要な discord->wallet アドレスの参照ができていない。同様のフォームを作り直し（カラム名 sensitive）、該当 API キーを更新する必要あり。
+
+## Possible improvements
+
+- github の secret をトラストするなら、safe の署名に用いる秘密鍵を格納しちゃって airdrop 自体を actions で cron job に投げられるかも（都度実行->safe で csv airdrop ポチポチしなくて良い）
