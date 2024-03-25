@@ -3,9 +3,11 @@
 # get env variables
 source ./config.txt
 
-# user token https://github.com/Tyrrrz/DiscordChatExporter/blob/master/.docs/Token-and-IDs.md#how-to-get-a-user-token
-userID=$DISCORDUSER
-serverID=$DISCORDSERVER
+serverID=936573458748432405 #UNCHAIN server ID
+userID=$DISCORDUSER # user token https://github.com/Tyrrrz/DiscordChatExporter/blob/master/.docs/Token-and-IDs.md#how-to-get-a-user-token
+
+START="2024-01-01"
+END="2024-03-24"
 
 #after~before
 	# from $(date -j -v-30d +'%Y-%m-%d')
@@ -21,7 +23,7 @@ mkdir -p discord_log/$folderName
 export userID serverID Af Bf folderName
 
 #execute discord crawling script
-dotnet ./DiscordChatExporter.Cli/DiscordChatExporter.Cli.dll exportguild -t $userID -g $serverID --include-threads active --after "$Af" --before "$Bf" -o discord_log/$folderName
+sh crawl_discordServer.sh
 
 #activate python venv
 source ./venv/bin/activate
