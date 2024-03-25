@@ -28,7 +28,7 @@ def ens(endpoint) -> ENS:
     """ This function retrieves ENS endpiont. """
 
     w3_provider: Web3.HTTPProvider = Web3.HTTPProvider(endpoint)
-    assert w3_provider.isConnected()
+    assert w3_provider.is_connected()
     ens_endpoint: ENS = ENS(provider=w3_provider)
 
     return ens_endpoint
@@ -57,7 +57,7 @@ def get_p2p_data(path) -> pd.DataFrame:
     # retrieve raw discord log
     csv_posts: list[str] = sorted(os.listdir(path))
     df_posts: pd.DataFrame = pd.concat(
-        map(pd.read_csv, [path+"/"+i for i in csv_posts]), ignore_index=True
+        map(lambda c: pd.read_csv(c, on_bad_lines="skip"), [path+"/"+i for i in csv_posts]), ignore_index=True
     )
 
     # prune columns & remove NaN
