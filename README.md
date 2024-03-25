@@ -10,3 +10,7 @@ The first part (`crawl_discordServer.sh`) crawls the UNCHAIN discord server and 
 The second part (`CHAIcounter.py`) looks into the collected dataset and counts the number of P2P reactions to UNCHAIN crew's posts, counts the amount of CHAI to give each individual, and generates a CSV file to be used in the Gnosis token [multisender app](https://github.com/bh2smith/safe-airdrop).
 
 `CHAI_csv_execute.sh` runs both in sequence for convenience. It should be ran every week on Sundays.
+
+## Must fix
+
+- [CHAI form](https://airtable.com/shrlc6B8wfHBiZmYV) のアクセスを現在持っていないので配布に必要な discord->wallet アドレスの参照ができていない。同様のフォームを作り直し（カラム名 sensitive）、該当 API キーを更新する必要あり。
